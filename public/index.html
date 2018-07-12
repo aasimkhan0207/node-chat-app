@@ -5,21 +5,8 @@
 
     <body>
         <p>Welcom To Chat App </p>
-
         <script src="/socket.io/socket.io.js"></script>
-        <script>
-            var socket = io();
-
-            // regiter event(connect)
-            socket.on('connect',() => {
-                console.log('client connected server');
-            });
-
-            socket.on('disconnect', ()=>{
-                console.log('Disconnected from server');
-            });
-
-        </script>
+        <script src="/js/index.js"></script>
     </body>
 
 </html>

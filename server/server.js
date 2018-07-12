@@ -8,16 +8,31 @@ var publicPath = path.join(__dirname,'../public');
 var port = process.env.PORT || 3000 ;
 app.use(express.static(publicPath));
 
-var server = http.createServer(app); // server similar to as app(express)
+var server = http.createServer(app);
 var io = socketIO(server); // web socket server
 
-// register event listener . whene this event happens do smth.
+
 io.on('connection', (socket)=>{
+    // log message when connected
     console.log('New user connected');
+
+    //server to client
+    socket.emit('newMessage',{
+        from: 'John',
+        message:'hey ! this is server',
+        createdAt:123
+    });// this data will be sent from server to client
+
+    // client to server
+    socket.on('createMessage',(message)=>{
+        console.log('clients message ',message);
+    })
+
 
     socket.on('disconnect',(socket) =>{
         console.log('client Disconnected');
     });
+
 });
 
 server.listen(port, ()=>{
