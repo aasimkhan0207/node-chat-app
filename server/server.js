@@ -27,11 +27,12 @@ io.on('connection', (socket)=>{
     // TASK 2: send "NEW USER JOINED" from admin to everyone else
     socket.broadcast.emit('newMessage',generator('Admin','NEW USER JOINED'));
 
-    // client to server (client send message)
-    socket.on('createMessage',(message)=>{
+    // event listener (client to server) with ack. feature
+    socket.on('createMessage',(message, callback)=>{
+        console.log(message);
+        callback('this is server'); // this data will be sent to client as ack.
         // send message to all connections
         io.emit('newMessage',generator(message.from, message.text));
-
         // // to everyone else
         // socket.broadcast.emit('newMessage',{
         //     from : message.from,
