@@ -16,17 +16,21 @@ io.on('connection', (socket)=>{
     // log message when connected
     console.log('New user connected');
 
-    //server to client
-    socket.emit('newMessage',{
-        from: 'John',
-        message:'hey ! this is server',
-        createdAt:123
-    });// this data will be sent from server to client
+    // //server to client
+    // socket.emit('newMessage',{
+    //     from: 'John',
+    //     text:'hey ! this is server',
+    //     createdAt:123
+    // });// this data will be sent from server to client
 
     // client to server
     socket.on('createMessage',(message)=>{
-        console.log('clients message ',message);
-    })
+        io.emit('newMessage',{
+            from : message.from,
+            text : message.text,
+            createdAt : new Date().getTime()
+        });
+    });
 
 
     socket.on('disconnect',(socket) =>{

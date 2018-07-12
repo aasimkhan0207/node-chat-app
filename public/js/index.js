@@ -3,10 +3,10 @@ var socket = io();
 socket.on('connect',function() {
     console.log('client connected server');
 
-    socket.emit('createMessage',{
-        to:'aasim@gmail.com',
-        message:'i have completed ur task'
-    });
+    // socket.emit('createMessage',{
+    //     from:'aasim@gmail.com',
+    //     text:'i have completed ur task'
+    // });
 
 });
 
