@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io')
+const {generator} = require('./utils/message')
 
 var app = express();
 var publicPath = path.join(__dirname,'../public');
@@ -21,25 +22,15 @@ io.on('connection', (socket)=>{
     // });// this data will be sent from server to client
 
     // TASK 1 : send msg "WELCOME TO CHAT APP" from admin
-    socket.emit('newMessage',{
-        from : "Admin",
-        text : "WELCOME TO CHAT APP"
-    });
+    socket.emit('newMessage',generator('Admin','WELCOME TO CHAT APP'));
 
     // TASK 2: send "NEW USER JOINED" from admin to everyone else
-    socket.broadcast.emit('newMessage',{
-        from : "Admin",
-        text : "New user joined"
-    });
+    socket.broadcast.emit('newMessage',generator('Admin','NEW USER JOINED'));
 
     // client to server (client send message)
     socket.on('createMessage',(message)=>{
         // send message to all connections
-        io.emit('newMessage',{
-            from : message.from,
-            text : message.text,
-            createdAt : new Date().getTime()
-        });
+        io.emit('newMessage',generator(message.from, message.text));
 
         // // to everyone else
         // socket.broadcast.emit('newMessage',{
