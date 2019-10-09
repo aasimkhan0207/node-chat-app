@@ -4,6 +4,7 @@ const http = require('http');
 const socketIO = require('socket.io')
 const {generator} = require('./utils/message')
 
+//app
 var app = express();
 var publicPath = path.join(__dirname,'../public');
 var port = process.env.PORT || 3000 ;
